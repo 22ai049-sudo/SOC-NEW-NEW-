@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: nexus-ollama}
+spec:
+  selector: {matchLabels: {app: nexus-ollama}}
+  template:
+    metadata: {labels: {app: nexus-ollama}}
+    spec:
+      containers:
+      - name: ollama
+        image: ollama/ollama:latest
+        ports: [{containerPort: 11434}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: nexus-ollama}
+spec:
+  selector: {app: nexus-ollama}
+  ports: [{port: 11434, targetPort: 11434}]
