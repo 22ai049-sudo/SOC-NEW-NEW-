@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: nexus-frontend}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: nexus-frontend}}
+  template:
+    metadata: {labels: {app: nexus-frontend}}
+    spec:
+      containers:
+      - name: frontend
+        image: nexus/frontend:latest
+        ports: [{containerPort: 3000}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: nexus-frontend}
+spec:
+  selector: {app: nexus-frontend}
+  ports: [{port: 3000, targetPort: 3000}]
