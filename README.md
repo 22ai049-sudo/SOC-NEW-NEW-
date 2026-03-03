@@ -101,3 +101,43 @@ kubectl apply -f k8s/backend-deployment.yaml
 kubectl apply -f k8s/frontend-deployment.yaml
 kubectl apply -f k8s/ingress.yaml
 ```
+
+## Troubleshooting
+
+### Frontend install/build fails with `403 Forbidden`
+If `npm install` or `npm run build` fails with a registry/proxy `403`, check and clear local npm proxy settings:
+
+```bash
+npm config get proxy
+npm config get https-proxy
+npm config delete proxy
+npm config delete https-proxy
+```
+
+Then retry:
+
+```bash
+cd frontend
+npm install
+npm run build
+```
+
+If your environment requires a corporate proxy, set valid proxy values instead of deleting them.
+
+### Playwright screenshot shows `ERR_EMPTY_RESPONSE`
+This usually means the frontend server is not running. Start frontend first:
+
+```bash
+cd frontend
+npm run dev -- --host 0.0.0.0 --port 3000
+```
+
+Then open `http://localhost:3000` and rerun screenshot tooling.
+
+### Backend startup/auth hashing issue in Python 3.12
+The backend now uses `pbkdf2_sha256` as the primary hashing scheme to avoid bcrypt runtime incompatibilities in some Python 3.12 images. Rebuild the backend image after pulling latest changes:
+
+```bash
+docker compose build backend --no-cache
+docker compose up backend
+```
