@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: nexus-redis}
+spec:
+  selector: {matchLabels: {app: nexus-redis}}
+  template:
+    metadata: {labels: {app: nexus-redis}}
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports: [{containerPort: 6379}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: nexus-redis}
+spec:
+  selector: {app: nexus-redis}
+  ports: [{port: 6379, targetPort: 6379}]

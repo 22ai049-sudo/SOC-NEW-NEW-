@@ -1,0 +1,12 @@
+:root{--bg:#050816;--panel:rgba(14,23,49,.55);--line:#233b70;--text:#c7e1ff;--accent:#00d9ff;--danger:#ff4d6d}
+body{margin:0;background:radial-gradient(circle at 20% 20%,#0a1b43,#050816 50%);color:var(--text);font-family:Inter,system-ui}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar,.topbar,.panel,.drawer{background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--line)}
+.sidebar{padding:12px}.topbar{padding:10px 16px;display:flex;justify-content:space-between}.content{padding:16px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.panel{border-radius:12px;padding:12px}
+.badge{padding:4px 8px;border-radius:999px;border:1px solid var(--line)}
+.pulse{animation:pulse 1.5s infinite}@keyframes pulse{50%{opacity:.5}}
+.table-row{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #143463}
+button{background:linear-gradient(90deg,#0066ff,#00d9ff);border:0;color:white;padding:8px 12px;border-radius:8px;cursor:pointer}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;justify-content:flex-end}
+.drawer{width:min(520px,100%);height:100%;padding:14px;overflow:auto;box-shadow:0 0 30px rgba(0,0,0,.3)}
