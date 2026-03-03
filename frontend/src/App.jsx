@@ -15,7 +15,7 @@ import api from './services/api';
 import './styles/theme.css';
 
 function Shell() {
-  const { user, login } = useAuth();
+  const { user, loading, login } = useAuth();
   const [live, setLive] = useState(null);
   const [wsConnected, setWs] = useState(false);
   const [tenant, setTenant] = useState('tenant-a');
@@ -43,8 +43,13 @@ function Shell() {
     setTenant(nextTenant);
   }
 
-  if (!user) {
-    return <div className='panel' style={{ maxWidth: 320, margin: '80px auto' }}><h3>Login</h3><button onClick={() => login('admin', 'admin123')}>Login as admin</button></div>;
+  useEffect(() => {
+    if (loading || user) return;
+    login('admin', 'admin123').catch(() => {});
+  }, [loading, user, login]);
+
+  if (loading || !user) {
+    return <div className='panel' style={{ maxWidth: 360, margin: '80px auto' }}><h3>Initializing NEXUS session...</h3></div>;
   }
 
   return (

@@ -123,6 +123,11 @@ npm run build
 ```
 
 If your environment requires a corporate proxy, set valid proxy values instead of deleting them.
+For Docker builds, you can also pass a private/approved npm registry:
+
+```bash
+docker build -f frontend/Dockerfile --build-arg NPM_REGISTRY=https://your-registry.example.com -t nexus/frontend:latest frontend
+```
 
 ### Playwright screenshot shows `ERR_EMPTY_RESPONSE`
 This usually means the frontend server is not running. Start frontend first:

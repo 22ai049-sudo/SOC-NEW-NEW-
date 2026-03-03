@@ -4,10 +4,15 @@ const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://loca
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
-api.interceptors.response.use((r) => r, (e) => Promise.reject(e.response?.data || e.message));
+api.interceptors.response.use(
+  (response) => response.data,
+  (error) => Promise.reject(error.response?.data || { detail: error.message || 'Request failed' }),
+);
 
 export default api;
